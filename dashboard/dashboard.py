@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 import plotly.express as px
+import os
 sns.set_theme(style='dark')
 
 st.set_page_config(page_title="Bike Sharing Dashboard",
@@ -83,8 +84,9 @@ def create_seasonly_share_df(df):
 
 
 # Load cleaned data
-day_df = pd.read_csv("cleaned_day.csv")
-hour_df = pd.read_csv("cleaned_hour.csv")
+script_dir = os.path.dirname(os.path.realpath(__file__))
+day_df = pd.read_csv(f"{script_dir}/cleaned_day.csv")
+hour_df = pd.read_csv(f"{script_dir}/cleaned_hour.csv")
 
 hour_df.sort_values(by="dteday", inplace=True)
 hour_df.reset_index(inplace=True)
