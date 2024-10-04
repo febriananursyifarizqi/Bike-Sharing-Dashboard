@@ -266,4 +266,21 @@ with tab3:
             """
         )
 
+
+mean_cnt = main_df['cnt'].mean()
+std_cnt = main_df['cnt'].std()
+
+# Membuat kolom baru berdasarkan kolom cnt (rendah, sedang, tinggi)
+main_df['cnt_category'] = pd.cut(main_df['cnt'],
+                                bins=[0, mean_cnt - std_cnt, mean_cnt + std_cnt, main_df['cnt'].max()],
+                                labels=['Rendah', 'Sedang', 'Tinggi'])
+
+category_counts = main_df['cnt_category'].value_counts()
+fig9 = px.pie(values=category_counts.values, 
+             names=category_counts.index, 
+             title='Distribusi Kategori Jumlah Peminjaman Sepeda',
+             color_discrete_sequence=["#f70a8d", "#00d26a", "#00a6ed"])
+
+st.plotly_chart(fig9, use_container_width=True)
+
 st.caption("Copyright (c) Febriana Nur Syifa Rizqi 2024")
